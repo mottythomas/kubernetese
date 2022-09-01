@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: vote
+  name: vote
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: vote
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: vote
+    spec:
+      containers:
+      - image: eesprit/voting-app-vote
+        name: voting-app-vote
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: vote-svc
+  name: vote-svc
+spec:
+  ports:
+  - name: "80"
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: vote
+  type: ClusterIP
+status:
+  loadBalancer: {}

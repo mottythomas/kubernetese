@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: webapp-svc
+  name: webapp-svc
+spec:
+  ports:
+  - name: "80"
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: webapp
+  type: LoadBalancer
+status:
+  loadBalancer: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: webapp
+  name: webapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: webapp
+    spec:
+      containers:
+      - image: httpd
+        name: httpd
+        volumeMounts:
+         - name: config
+           mountPath: /usr/local/apache2/htdocs
+        resources: {}
+      volumes:
+         - name: config
+           persistentVolumeClaim:
+            claimName: pvc-dynamic
+status: {}

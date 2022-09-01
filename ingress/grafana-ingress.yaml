@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-grafana
+  namespace: monitoring
+  annotations:
+spec:
+  rules:
+    - host: grafana.lab.local
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: kube-stack-prometheus-grafana
+              port:
+               number: 80
+  ingressClassName: nginx

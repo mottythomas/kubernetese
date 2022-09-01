@@ -1,0 +1,131 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: cheese01
+  name: cheese01
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cheese01
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: cheese01
+    spec:
+      containers:
+      - image: errm/cheese:wensleydale
+        name: cheese
+        resources: {}
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: cheese02
+  name: cheese02
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cheese02
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: cheese02
+    spec:
+      containers:
+      - image: errm/cheese:cheddar
+        name: cheese
+        resources: {}
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: cheese03
+  name: cheese03
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cheese03
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: cheese03
+    spec:
+      containers:
+      - image: errm/cheese:stilton
+        name: cheese
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: cheese01-svc
+  name: cheese01-svc
+spec:
+  ports:
+  - name: "80"
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: cheese01
+  type: ClusterIP
+status:
+  loadBalancer: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: cheese02-svc
+  name: cheese02-svc
+spec:
+  ports:
+  - name: "80"
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: cheese02
+  type: ClusterIP
+status:
+  loadBalancer: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: cheese03-svc
+  name: cheese03-svc
+spec:
+  ports:
+  - name: "80"
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: cheese03
+  type: ClusterIP
+status:
+  loadBalancer: {}
